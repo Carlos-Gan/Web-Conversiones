@@ -10,12 +10,12 @@
       rel="stylesheet"
     />
   </head>
+  <nav>
+    <ul>
+      <li><a href="main.html">Menú Principal</a></li>
+    </ul>
+  </nav>
   <body>
-    <nav>
-      <ul>
-        <li><a href="main.html">Menú Principal</a></li>
-      </ul>
-    </nav>
     <nav class="OpConversor">
       <ul>
         <li><a href="#OpTemp">Temperatura</a></li>
@@ -25,10 +25,102 @@
     </nav>
     <div class="title">
       <h1>Conversor de Unidades</h1>
+      <div>
+        <p>
+          La <b>conversión de unidades</b> es la transformación del valor
+          numérico de una magnitud física, expresado en una cierta unidad de o
+          en otra unidad de medida de la misma naturaleza. Este proceso suele
+          realizarse con el uso de los "factores de conversión" o las tablas de
+          conversión de unidades.
+        </p>
+      </div>
     </div>
     <section>
       <article class="OpTemp">
         <div class="subtitle"><h2>Conversiones de Temperatura</h2></div>
+        <p>
+          Existen varios conversores de temperatura disponibles en línea que
+          permiten convertir fácilmente entre diferentes unidades de temperatura
+          como Celsius, Fahrenheit, Kelvin, Rankine y Réaumur.
+        </p>
+        <p>
+          Estas herramientas son útiles para cualquier persona que necesite
+          trabajar con diferentes medidas de temperatura, ya sea para fines
+          educativos, profesionales o personales.
+        </p>
+        <section class="tempOptions">
+          <article class="tempOptions-1">
+            <p>¿Que unidad deseas convertir?</p>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="temp" value="Celsius" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Celsius</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temp" value="Fahrenheit" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Fahrenheit</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temp" value="Kelvin" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Kelvin</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temp" value="Rankine" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Rankine</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temp" value="Réaumur" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Réaumur</span>
+              </label>
+            </div>
+            
+          </article>
+          <article class="tempOptions-2">
+            <p>¿A que unidad deseas convertir?</p>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="tempDestino" value="Celsius" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Celsius</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tempDestino" value="Fahrenheit" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Fahrenheit</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tempDestino" value="Kelvin" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Kelvin</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tempDestino" value="Rankine" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Rankine</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="tempDestino" value="Réaumur" />
+                <span class="custom-radio"></span>
+                <span class="radio-text">Réaumur</span>
+              </label>
+            </div>
+            
+          </article>
+        </section>
+        <article class="IngresaConvierte">
+          <p class="InputTemp">Ingrese la temperatura a convertir:</p>
+        <input type="text" id="tempInput" placeholder="" />
+        <button class="btnTemp">Convertir</button>
+        </article>
+        <article class="ResultadoTemp">
+          <p class="resultado">Resultado:</p>
+          <input type="text" id="tempResult" placeholder="" disabled />
+        
       </article>
       <article class="OpPeso">
         <div class="subtitle">
@@ -42,4 +134,69 @@
       </article>
     </section>
   </body>
+  <script>
+    document.querySelector(".btnTemp").addEventListener("click", () => {
+      const origen = document.querySelector('input[name="temp"]:checked');
+      const destino = document.querySelector('input[name="tempDestino"]:checked');
+      const valor = parseFloat(document.getElementById("tempInput").value);
+      const resultado = document.getElementById("tempResult");
+  
+      if (!origen || !destino || isNaN(valor)) {
+        resultado.value = "Falta seleccionar unidades o ingresar valor.";
+        return;
+      }
+  
+      const from = origen.value;
+      const to = destino.value;
+      let celsius;
+  
+      // Paso 1: Convertir a Celsius primero
+      switch (from) {
+        case "Celsius":
+          celsius = valor;
+          break;
+        case "Fahrenheit":
+          celsius = (valor - 32) * 5 / 9;
+          break;
+        case "Kelvin":
+          celsius = valor - 273.15;
+          break;
+        case "Rankine":
+          celsius = (valor - 491.67) * 5 / 9;
+          break;
+        case "Réaumur":
+          celsius = valor * 5 / 4;
+          break;
+        default:
+          resultado.value = "Unidad de origen no válida.";
+          return;
+      }
+  
+      // Paso 2: Convertir desde Celsius a destino
+      let convertido;
+      switch (to) {
+        case "Celsius":
+          convertido = celsius;
+          break;
+        case "Fahrenheit":
+          convertido = (celsius * 9 / 5) + 32;
+          break;
+        case "Kelvin":
+          convertido = celsius + 273.15;
+          break;
+        case "Rankine":
+          convertido = (celsius * 9 / 5) + 491.67;
+          break;
+        case "Réaumur":
+          convertido = celsius * 4 / 5;
+          break;
+        default:
+          resultado.value = "Unidad de destino no válida.";
+          return;
+      }
+  
+      resultado.value = `${convertido.toFixed(2)}° ${to}`;
+      
+    });
+  </script>
 </html>
